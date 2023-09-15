@@ -90,27 +90,7 @@ public class CorrectingPlayerInventoryStorage extends InventoryStorage {
     }
 
     private void checkThatBukkitIsSynced(int slot) {
-        // The player isn't fully logged in yet, don't bother checking
-        if (player.bukkitPlayer == null) return;
-        // We aren't tracking the player's inventory, so don't bother
-        if (!player.getInventory().isPacketInventoryActive) return;
-
-        // Bukkit uses different slot ID's to vanilla
-        int bukkitSlot = player.getInventory().getBukkitSlot(slot); // 8 -> 39, should be 36
-
-        if (bukkitSlot != -1) {
-            org.bukkit.inventory.ItemStack bukkitItem = player.bukkitPlayer.getInventory().getItem(bukkitSlot);
-
-            ItemStack existing = getItem(slot);
-            ItemStack toPE = SpigotConversionUtil.fromBukkitItemStack(bukkitItem);
-
-            if (existing.getType() != toPE.getType() || existing.getAmount() != toPE.getAmount()) {
-                FoliaCompatUtil.runTaskForEntity(player.bukkitPlayer,GrimAPI.INSTANCE.getPlugin(), () -> {
-                    player.bukkitPlayer.updateInventory();
-                }, null, 0);
-                setItem(slot, toPE);
-            }
-        }
+        //Removed
     }
 
     public void tickWithBukkit() {
